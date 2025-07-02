@@ -54,6 +54,17 @@ def test_parser_cli():
     assert get_parse_cli("\"app/admin/admin.controller.js\"") == ["app/admin/admin.controller.js"]
     assert get_parse_cli("\"services/customer.services.js\"") == ["services/customer.services.js"]
 
+    # Tests for single-quote (') quoted urls
+    assert get_parse_cli("'test2.aspx?arg1=tmp1+tmp2&arg2=tmp3'") == ["test2.aspx?arg1=tmp1+tmp2&arg2=tmp3"]
+    assert get_parse_cli("'/test-faq?locale=${t}&populate=deep,10'") == ["/test-faq?locale=${t}&populate=deep,10"]
+    assert get_parse_cli("'/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10'") == ["/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10"]
+
+    # Tests for backtick (`) quoted urls
+    assert get_parse_cli("`/test-faq?locale=${t}&populate=deep,10`") == ["/test-faq?locale=${t}&populate=deep,10"]
+    assert get_parse_cli("`/test-faq/?locale=${t}`") == ["/test-faq/?locale=${t}"]
+    assert get_parse_cli("`/test-faq#$-1234-@`") == ["/test-faq#$-1234-@"]
+    assert get_parse_cli("`/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10`") == ["/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10"]
+
 def test_parser_cli_multi():
     assert set(get_parse_cli("href=\"http://example.com\";href=\"/api/create.php\"")) == set(["http://example.com", "/api/create.php"])
 
