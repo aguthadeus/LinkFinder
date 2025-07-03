@@ -32,8 +32,8 @@ regex_str = r"""
 
   (
     ((?:[a-zA-Z]{1,10}://|//)           # Match a scheme [a-Z]*1-10 or //
-    [^"'/]{1,}\.                        # Match a domainname (any character + dot)
-    [a-zA-Z]{2,}[^"']{0,})              # The domainextension and/or path
+    [^"'`/]{1,}\.                        # Match a domainname (any character + dot)
+    [a-zA-Z]{2,}[^"'`]{0,})              # The domainextension and/or path
 
     |
 
