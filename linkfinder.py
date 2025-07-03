@@ -298,8 +298,8 @@ if __name__ == "__main__":
                         required="True", action="store")
     parser.add_argument("-o", "--output",
                         help="Where to save the file, \
-                        including file name. Default: output.html",
-                        action="store", default="output.html")
+                        including file name. Default: cli",
+                        action="store", default="cli")
     parser.add_argument("-r", "--regex",
                         help="RegEx for filtering purposes \
                         against found endpoint (e.g. ^/api/)",
@@ -319,9 +319,10 @@ if __name__ == "__main__":
     if args.input[-1:] == "/":
         args.input = args.input[:-1]
 
-    mode = 1
-    if args.output == "cli":
+    if args.output == "cli": 
         mode = 0
+    else:
+        mode = 1
 
     # Convert input to URLs or JS files
     urls = parser_input(args.input)
