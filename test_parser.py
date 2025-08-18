@@ -29,7 +29,7 @@ def test_parser_cli():
     assert get_parse_cli("\"api/create.php?user=test&pass=test\"") == ["api/create.php?user=test&pass=test"]
     assert get_parse_cli("\"api/create.php?user=test#home\"") == ["api/create.php?user=test#home"]
     assert get_parse_cli("\"user/create.action?user=Test\"") == ["user/create.action?user=Test"]
-    assert get_parse_cli("\"user/create.notaext?user=Test\"") == []
+    assert get_parse_cli("\"user/create.notaext?user=Test\"") == ["user/create.notaext?user=Test"]
 
     assert get_parse_cli("\"/path/to/file\"") == ["/path/to/file"]
     assert get_parse_cli("\"../path/to/file\"") == ["../path/to/file"]
@@ -49,7 +49,7 @@ def test_parser_cli():
     assert get_parse_cli("\"index.html\"") == ["index.html"]
     assert get_parse_cli("\"robots.txt\"") == ["robots.txt"]
     assert get_parse_cli("\"users.xml\"") == ["users.xml"]
-    assert get_parse_cli("\"UserModel.name\"") == []
+    assert get_parse_cli("\"UserModel.name\"") == ["UserModel.name"]
 
     assert get_parse_cli("\"app/admin/admin.controller.js\"") == ["app/admin/admin.controller.js"]
     assert get_parse_cli("\"services/customer.services.js\"") == ["services/customer.services.js"]
@@ -64,6 +64,7 @@ def test_parser_cli():
     assert get_parse_cli("`/test-faq/?locale=${t}`") == ["/test-faq/?locale=${t}"]
     assert get_parse_cli("`/test-faq#$-1234-@`") == ["/test-faq#$-1234-@"]
     assert get_parse_cli("`/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10`") == ["/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10"]
+    assert get_parse_cli("`${C.c.SERVER_URL}/api/Profile/I`") == ["${C.c.SERVER_URL}/api/Profile/I"]
 
 def test_parser_cli_multi():
     assert set(get_parse_cli("href=\"http://example.com\";href=\"/api/create.php\"")) == set(["http://example.com", "/api/create.php"])
