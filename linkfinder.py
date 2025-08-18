@@ -4,7 +4,7 @@
 # By Gerben_Javado
 
 # Fix webbrowser bug for MacOS
-import os
+import os,mimetypes,pytz
 os.environ["BROWSER"] = "open"
 
 # Import libraries
@@ -61,6 +61,19 @@ regex_str = rf"""
   [{quote_chars}]                               # End newline delimiter
 
   """
+
+all_types = mimetypes.types_map.copy()
+all_types.update(mimetypes.common_types)
+
+mime_regex="|".join(set(all_types.values()))
+
+tz_regex="|".join([tz for tz in pytz.all_timezones])
+date_regex="yyyy[-/].*|.*[-/]yyyy"
+non_ipv4_regex="\d+[.\d+]{,2}|\d+[.\d+]{4,}"
+
+negate_regex=f"""
+^({non_ipv4_regex} | {mime_regex} | {date_regex})$
+"""
 
 context_delimiter_str = "\n"
 
@@ -217,8 +230,13 @@ def parser_file(content, regex_str, mode=1, more_regex=None, no_dup=1):
         items = no_dup_items
 
     # Match Regex
+    n_regex=re.compile(negate_regex,re.VERBOSE | re.IGNORECASE)
     filtered_items = []
     for item in items:
+
+        #Removing patterns that aren't needed MIMES, Timezones
+        if(re.search(n_regex,item["link"].strip())):
+            continue
         # Remove other capture groups from regex results
         if more_regex:
             if re.search(more_regex, item["link"]):
