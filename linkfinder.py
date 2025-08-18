@@ -25,10 +25,11 @@ try:
 except ImportError:
     from urllib2 import Request, urlopen
 
-js_var_pattern=r"\$\{.+\}"
+quote_chars="\"'`"
+js_var_pattern="\$\{[^"+quote_chars+"]+?\}"
 scheme_pattern=r"(?:[a-zA-Z]{1,10}:)?//"
-param_pattern=r"\?.*"
-segment_pattern=r"\#.*"
+param_pattern=r"\?.*?"
+segment_pattern=r"\#.*?"
 ext_pattern=r"\.[a-zA-Z0-9]{1,6}" #.txt,.7z,.bz2 etc up to 6 chars
 alphanum_pattern=r"a-zA-Z0-9_-"
 relparent_pattern=r"\.\./|\./"
@@ -36,8 +37,8 @@ path_pattern=rf"""
     #Unreserved chars according to rfc3986:    (Unreserved  = alpha / digit / "-" / "." / "_" / "~"), including % for %xx special char escapes. Include js variables inside backticks
         /?
             (?:
-                (?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+)/)*
-                (?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+
+                (?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+)?
+                (/(?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+))+?/?
             )
         /?
     """ 
@@ -48,7 +49,7 @@ domain_pattern=rf"(?:[a-zA-Z0-9\-_]+\.)*[a-zA-Z0-9\-_]+{ext_pattern}"
 # regex used
 regex_str = rf"""
 
-  ["'`]  
+  [{quote_chars}]  
   (
     (?:
         (?:{scheme_pattern})?{domain_pattern}({path_pattern})?
@@ -57,7 +58,7 @@ regex_str = rf"""
     )
     (?:{param_pattern}|{segment_pattern})?
   ) 
-  ["'`]                               # End newline delimiter
+  [{quote_chars}]                               # End newline delimiter
 
   """
 

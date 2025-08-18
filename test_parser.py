@@ -65,6 +65,7 @@ def test_parser_cli():
     assert get_parse_cli("`/test-faq#$-1234-@`") == ["/test-faq#$-1234-@"]
     assert get_parse_cli("`/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10`") == ["/popups?locale=${e}&sort=id:desc&filters[type][$eq]=${t}&populate=deep,10"]
     assert get_parse_cli("`${C.c.SERVER_URL}/api/Profile/I`") == ["${C.c.SERVER_URL}/api/Profile/I"]
+    assert get_parse_cli("`${this.getStatusDescription()} (${G} days ago)`}getBalance(){return this.applicationDetailsData?.invW),W.select(),document.execCommand(&quot;copy&quot;),document.body.removeChild(W),this.message.success(&quot;Copied to clipboard!&quot;)}):this.message.warning(&quot;No text to copy&quot;)}{return this.http.get(`${i.c.test_url}/api/MembershipApplications/GetPurchasedServiceByID?historyID=${H}`")==["${i.c.test_url}/api/MembershipApplications/GetPurchasedServiceByID?historyID=${H}"]
 
 def test_parser_cli_multi():
     assert set(get_parse_cli("href=\"http://example.com\";href=\"/api/create.php\"")) == set(["http://example.com", "/api/create.php"])
