@@ -26,7 +26,7 @@ except ImportError:
     from urllib2 import Request, urlopen
 
 quote_chars="\"'`"
-js_var_pattern="\$\{[^"+quote_chars+"]+?\}"
+js_var_pattern=r"\$\{[^"+quote_chars+r"]+?\}"
 scheme_pattern=r"(?:[a-zA-Z]{1,10}:)?//"
 param_pattern=r"\?.*?"
 segment_pattern=r"\#.*?"
@@ -69,7 +69,7 @@ mime_regex="|".join(set(all_types.values()))
 
 tz_regex="|".join([tz for tz in pytz.all_timezones])
 date_regex="yyyy[-/].*|.*[-/]yyyy"
-non_ipv4_regex="\d+[.\d+]{,2}|\d+[.\d+]{4,}"
+non_ipv4_regex=r"\d+[.\d+]{,2}|\d+[.\d+]{4,}"
 
 negate_regex=f"""
 ^({non_ipv4_regex} | {mime_regex} | {date_regex})$
