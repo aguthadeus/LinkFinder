@@ -26,7 +26,7 @@ except ImportError:
     from urllib2 import Request, urlopen
 
 quote_chars="\"'`"
-js_var_pattern=r"\$\{[^"+quote_chars+r"]+?\}"
+js_var_pattern=r"\$\{[^"+quote_chars+r"]+?\}" # Javascript variable with string e.g `${var}`
 scheme_pattern=r"(?:[a-zA-Z]{1,10}:)?//"
 param_pattern=r"\?.*?"
 segment_pattern=r"\#.*?"
@@ -43,7 +43,7 @@ path_pattern=rf"""
         /?
     """ 
 
-file_pattern=r"[a-zA-Z0-9\-._~%]\.[a-zA-Z]{1,7}"
+file_pattern=rf"[a-zA-Z0-9\-._~%]{ext_pattern}"
 domain_pattern=rf"(?:[a-zA-Z0-9\-_]+\.)*[a-zA-Z0-9\-_]+{ext_pattern}"
 
 # regex used
