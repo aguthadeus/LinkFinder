@@ -69,6 +69,7 @@ def test_parser_cli():
 
 def test_parser_cli_multi():
     assert set(get_parse_cli("href=\"http://example.com\";href=\"/api/create.php\"")) == set(["http://example.com", "/api/create.php"])
+    assert(get_parse_cli("userinfoEndpoint:`${Pc.c.ISSUER_URL}connect/userinfo`")==["${Pc.c.ISSUER_URL}connect/userinfo"])
 
 def test_parser_unique():
     '''

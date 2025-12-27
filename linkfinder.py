@@ -37,8 +37,8 @@ path_pattern=rf"""
     #Unreserved chars according to rfc3986:    (Unreserved  = alpha / digit / "-" / "." / "_" / "~"), including % for %xx special char escapes. Include js variables inside backticks
         /?
             (?:
-                (?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+)?
-                (/(?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+))+?/?
+                (?:{js_var_pattern}/?|[a-zA-Z0-9\-._~%]+/)?
+                ((?:{js_var_pattern}|[a-zA-Z0-9\-._~%]+)/?)+?
             )
         /?
     """ 
